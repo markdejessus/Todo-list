@@ -10,10 +10,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final TextEditingController _controller = TextEditingController();
-  List toDoList = [
-    ['kain', false],
-    ['inom tubig', false],
-  ];
+  List toDoList = [];
 
   void checkBoxChaned(int index) {
     setState(() {
@@ -25,6 +22,12 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       toDoList.add([_controller.text, false]);
       _controller.clear();
+    });
+  }
+
+  void deleteTask(int index) {
+    setState(() {
+      toDoList.removeAt(index);
     });
   }
 
@@ -46,38 +49,42 @@ class _HomePageState extends State<HomePage> {
               taskName: toDoList[index][0],
               taskCompleted: toDoList[index][1],
               onChanged: (value) => checkBoxChaned(index),
+              deleteTask: (context) => deleteTask(index),
             );
           },
         ),
-        floatingActionButton: Row(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: TextField(
-                  controller: _controller,
-                  decoration: InputDecoration(
-                    hintText: 'Add new todo items',
-                    filled: true,
-                    fillColor: Colors.blue.shade100,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue.shade400),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue.shade400),
-                      borderRadius: BorderRadius.circular(15),
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(
+                      hintText: 'Add new todo items',
+                      filled: true,
+                      fillColor: Colors.blue.shade100,
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue.shade400),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue.shade400),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            FloatingActionButton(
-              onPressed: saveNewTask,
-              backgroundColor: Colors.blue.shade100,
-              child: Icon(Icons.add),
-            ),
-          ],
+              FloatingActionButton(
+                onPressed: saveNewTask,
+                backgroundColor: Colors.blue.shade100,
+                child: Icon(Icons.add),
+              ),
+            ],
+          ),
         ),
       ),
     );

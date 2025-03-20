@@ -6,11 +6,13 @@ class Todo extends StatelessWidget {
       {super.key,
       required this.taskName,
       required this.taskCompleted,
-      this.onChanged});
+      required this.onChanged,
+      required this.deleteTask});
 
   final String taskName;
   final bool taskCompleted;
   final Function(bool?)? onChanged;
+  final Function(BuildContext)? deleteTask;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +23,8 @@ class Todo extends StatelessWidget {
           motion: StretchMotion(),
           children: [
             SlidableAction(
-              onPressed: (context) {},
-              backgroundColor: Colors.red,
+              onPressed: deleteTask,
+              backgroundColor: Colors.red.shade400,
               foregroundColor: Colors.white,
               borderRadius: BorderRadius.circular(15),
               icon: Icons.delete,
